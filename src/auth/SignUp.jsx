@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { TextField } from 'formik-mui';
 import { Box, Button } from '@mui/material';
@@ -40,7 +40,7 @@ const CardC = styled('Card')(({ theme }) => ({
 }));
 
 
-const LoginForm = ({ setShow, setMessage }) => (
+const LoginForm = ({ setShow, setMessage, navigation }) => (
     <Formik
         initialValues={{
             user_name: '',
@@ -69,6 +69,9 @@ const LoginForm = ({ setShow, setMessage }) => (
                 const data = await PostData(Url.signUp, values)
                 setSubmitting(false);
                 setMessage(data.message)
+                setTimeout(() => {
+                    navigation('home')
+                }, 2000);
             } catch (error) {
                 setMessage(error.response.data.error)
             } finally {
@@ -129,6 +132,7 @@ const LoginForm = ({ setShow, setMessage }) => (
 const SignUp = () => {
     const [show, setShow] = React.useState(false)
     const [message, setMessage] = React.useState('')
+    const navigation = useNavigate()
     return (
         <>
             <Popup show={show} message={message} />
@@ -137,7 +141,7 @@ const SignUp = () => {
                     <Grid item xs={12}  >
                         <CardC>
                             <img style={{ maxWidth: "80px", marginTop: "-45px" }} src={logo} alt="logo" />
-                            <LoginForm setShow={setShow} setMessage={setMessage} />
+                            <LoginForm setShow={setShow} setMessage={setMessage} navigation={navigation} />
 
                             <Typography variant='caption' >
                                 Already have a account ?
