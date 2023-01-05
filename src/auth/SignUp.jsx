@@ -7,6 +7,9 @@ import { Formik, Form, Field } from 'formik';
 
 import { Container, Grid, Typography } from '@mui/material'
 import logo from '../assests/images/logo.svg'
+import { PostData } from '../services/authServices';
+import { Url } from '../helpers/config';
+import Popup from '../component/popup/Popup';
 
 
 const CardS = styled('Grid')(({ theme }) => ({
@@ -37,7 +40,7 @@ const CardC = styled('Card')(({ theme }) => ({
 }));
 
 
-const LoginForm = () => (
+const LoginForm = ({ setShow, setMessage }) => (
     <Formik
         initialValues={{
             user_name: '',
@@ -60,11 +63,19 @@ const LoginForm = () => (
             }
             return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
+        onSubmit={async (values, { setSubmitting }) => {
+            setShow(true)
+            try {
+                const data = await PostData(Url.signUp, values)
                 setSubmitting(false);
-                alert(JSON.stringify(values, null, 2));
-            }, 500);
+                setMessage(data.message)
+            } catch (error) {
+                setMessage(error.response.data.error)
+            } finally {
+                setTimeout(() => {
+                    setShow(false)
+                }, 2000);
+            }
         }}
     >
         {({ submitForm, isSubmitting, }) => (
@@ -116,22 +127,28 @@ const LoginForm = () => (
 
 
 const SignUp = () => {
+    const [show, setShow] = React.useState(false)
+    const [message, setMessage] = React.useState('')
     return (
-        <Container maxWidth="sm">
-            <CardS >
-                <Grid item xs={12}  >
-                    <CardC>
-                        <img style={{ maxWidth: "80px", marginTop: "-45px" }} src={logo} alt="logo" />
-                        <LoginForm />
-                        <Typography variant='caption' >
-                            Already have a account ?
-                            <Link to="/">Login</Link>
-                        </Typography>
-                    </CardC>
-                </Grid>
+        <>
+            <Popup show={show} message={message} />
+            <Container maxWidth="sm">
+                <CardS >
+                    <Grid item xs={12}  >
+                        <CardC>
+                            <img style={{ maxWidth: "80px", marginTop: "-45px" }} src={logo} alt="logo" />
+                            <LoginForm setShow={setShow} setMessage={setMessage} />
 
-            </CardS>
-        </Container>
+                            <Typography variant='caption' >
+                                Already have a account ?
+                                <Link to="/">Login</Link>
+                            </Typography>
+                        </CardC>
+                    </Grid>
+
+                </CardS>
+            </Container>
+        </>
     )
 }
 

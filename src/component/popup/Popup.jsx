@@ -3,7 +3,7 @@ import Snackbar from "@mui/material/Snackbar";
 
 
 function PopUp(props) {
-  const { show } = props
+  const { show, message } = props
 
   const vertical = "top"
   const horizontal = "right"
@@ -14,7 +14,7 @@ function PopUp(props) {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={show}
-        message="I love snacks"
+        message={message}
         key={vertical + horizontal}
       />
     </div>
