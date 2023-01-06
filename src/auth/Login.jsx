@@ -32,7 +32,7 @@ const CardC = styled('Card')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
 
-    width: '400px',
+    width: '460px',
     flexDirection: 'column',
 
     '@media (max-width: 400px)': {
@@ -68,14 +68,13 @@ const LoginForm = ({ setShow, setMessage, navigation }) => (
                 setSubmitting(false);
                 setMessage(data.message)
                 setTimeout(() => {
-                    navigation('home')
+                    navigation('/home')
                 }, 2000);
             } catch (error) {
                 setMessage(error.response.data.error)
             } finally {
                 setTimeout(() => {
                     setShow(false)
-                    navigation('home')
                 }, 2000);
             }
         }}
