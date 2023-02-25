@@ -18,7 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import Dashboard from '../../pages/dashboard/Dashboard';
 
 const drawerWidth = 240;
 
@@ -43,7 +43,7 @@ const closedMixin = (theme) => ({
     },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
+export const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -190,12 +190,7 @@ function Navbar() {
                     ))}
                 </List>
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <DrawerHeader />
-                <Grid2>
-                    grid view
-                </Grid2>
-            </Box>
+            <Dashboard />
         </Box>
     );
 }
