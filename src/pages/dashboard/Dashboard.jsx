@@ -1,15 +1,19 @@
 import React from "react";
 import { DrawerHeader } from "../../component/navbar/Navbar";
 import { Box } from "@mui/material";
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { Route, Routes } from "react-router-dom";
+import Projects from "../projects/Projects";
+import Tasks from "../tasks/Tasks";
 
 const Dashboard = () => {
     return (
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
             <DrawerHeader />
-            <Grid2>
-                grid view
-            </Grid2>
+
+            <Routes>
+                <Route path="*" element={<Projects />} />
+                <Route path="tasks" element={<Tasks />} />
+            </Routes>
         </Box>
     )
 }
